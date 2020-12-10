@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "teamizer",
+  "version": "${version}",
+  "name": "Teamizer",
+  "description": "A mod made to organize locations",
+  "authors": [
+    "et118"
+  ],
+  "contributors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/teamizer/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [],
+    "client": ["org.et118.teamizer.main"],
+    "server": []
+  },
+  "mixins": [
+    "teamizer.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.10.8",
+    "fabric": "*"
+  }
+}
