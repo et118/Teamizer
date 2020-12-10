@@ -42,7 +42,6 @@ public class FileManager {
             if(!fileExists("settings.json")) {
                 saveJSON("settings.json",JSONSettings);
             }
-            System.out.println(getJSON("settings.json"));
         } catch(IOException e) {
             throw new RuntimeException("Could not create file or folder",e);
         }

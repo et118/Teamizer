@@ -1,13 +1,13 @@
 package org.et118.teamizer;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.MinecraftClientGame;
+import net.minecraft.text.Text;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.et118.teamizer.GUI.MenuScreen;
 
 public class main implements ClientModInitializer {
 
@@ -15,9 +15,11 @@ public class main implements ClientModInitializer {
 
     public static final String MOD_ID = "teamizer";
     public static final String MOD_NAME = "Teamizer";
-    public final MinecraftClient MC = MinecraftClient.getInstance();
 
+    public static final MinecraftClient MC = MinecraftClient.getInstance();
+    public static final MenuScreen menuScreen = new MenuScreen(Text.of("Menu"),MC);
     public FileManager fileManager;
+    public KeypressManager keypressManager;
 
     @Override
     public void onInitializeClient() {
@@ -25,7 +27,7 @@ public class main implements ClientModInitializer {
 
         fileManager = new FileManager(MC);
         fileManager.initializeFiles();
-
+        keypressManager = new KeypressManager(MC);
     }
 
     public static void log(Level level, String message){

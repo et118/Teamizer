@@ -2,7 +2,7 @@
   "required": true,
   "package": "org.et118.teamizer.mixin",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [],
+  "mixins": ["KeyboardMixin"],
   "client": [],
   "server": [],
   "injectors": {
