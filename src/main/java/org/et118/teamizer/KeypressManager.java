@@ -23,7 +23,6 @@ public class KeypressManager {
         } else if(main.MC.currentScreen instanceof MenuScreen) {
             if(inputType == 0 && (char)key == 'H') {
                 main.MC.openScreen((Screen) null);
-
             }
         }
 

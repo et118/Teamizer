@@ -2,7 +2,6 @@ package org.et118.teamizer;
 
 import net.minecraft.client.MinecraftClient;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -15,32 +14,35 @@ import java.nio.file.Path;
 public class FileManager {
 
     private MinecraftClient MC;
+    private SettingsManager settingsManager;
+
     private Path minecraftFolder;
     private Path teamizerFolder;
 
-    public FileManager(MinecraftClient MC) {
+
+    public FileManager(MinecraftClient MC, SettingsManager settingsManager) {
         this.MC = MC;
+        this.settingsManager = settingsManager;
     }
 
     private boolean fileExists(String file) {
         return teamizerFolder.resolve(file).toFile().exists();
     }
+
     private void createFolders(Path path) throws IOException{
         Files.createDirectories(path);
     }
+
     public void initializeFiles() {
         minecraftFolder = MC.runDirectory.toPath().normalize();
         teamizerFolder = minecraftFolder.resolve("teamizer");
         try {
             createFolders(teamizerFolder);
 
-            JSONArray JSONSettings = new JSONArray();
-            JSONObject setting = new JSONObject();
-            setting.put("Test","false");
-            JSONSettings.add(setting);
-
             if(!fileExists("settings.json")) {
-                saveJSON("settings.json",JSONSettings);
+                settingsManager.restoreSettings(this);
+            } else {
+                settingsManager.loadSettings(this);
             }
         } catch(IOException e) {
             throw new RuntimeException("Could not create file or folder",e);
@@ -64,14 +66,13 @@ public class FileManager {
         }
     }
 
-    public JSONArray getJSON(String name) {
+    public JSONArray loadJSON(String name) {
+        JSONArray array = null;
         Path filePath = teamizerFolder.resolve(name);
         JSONParser parser = new JSONParser();
-        JSONArray array = null;
         try(FileReader reader = new FileReader(filePath.toFile())) {
             Object obj = parser.parse(reader);
             array = (JSONArray) obj;
-
         } catch(IOException | ParseException e) {
             e.printStackTrace();
         }
